@@ -7,6 +7,7 @@
 <title>THE WADES FRAGRANCES</title>
 
 <style>
+
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
@@ -15,6 +16,7 @@ body {
 }
 
 /* HEADER */
+
 header {
   position: sticky;
   top: 0;
@@ -41,9 +43,7 @@ header h1 {
     0 0 28px rgba(255,215,0,0.4);
 
   animation: glowPulse 2.5s infinite ease-in-out;
-
-  }
-
+}
 
 @keyframes glowPulse {
   0%, 100% { filter: drop-shadow(0 0 10px gold); }
@@ -56,7 +56,9 @@ header p {
   letter-spacing: 2px;
 }
 
-.container { padding: 20px; }
+.container {
+  padding: 20px;
+}
 
 input, select {
   padding: 12px;
@@ -69,6 +71,7 @@ input, select {
 }
 
 /* PRODUCTS */
+
 .products {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -90,7 +93,19 @@ input, select {
   box-shadow: 0 10px 25px rgba(255,215,0,0.25);
 }
 
-.card h3 { color: gold; }
+.card h3 {
+  color: gold;
+}
+
+.product-image{
+  width:100%;
+  height:260px;
+  object-fit:cover;
+  border-radius:12px;
+  margin-bottom:12px;
+  border:1px solid rgba(255,215,0,0.3);
+  background:#000;
+}
 
 @keyframes fadeIn {
   from {opacity:0; transform: translateY(15px);}
@@ -98,6 +113,7 @@ input, select {
 }
 
 /* BUTTONS */
+
 button {
   background: linear-gradient(90deg, gold, #ffd700);
   color: black;
@@ -110,9 +126,12 @@ button {
   font-weight: bold;
 }
 
-button:hover { transform: scale(1.03); }
+button:hover {
+  transform: scale(1.03);
+}
 
 /* CART */
+
 .cart {
   margin-top: 30px;
   padding: 20px;
@@ -122,6 +141,7 @@ button:hover { transform: scale(1.03); }
 }
 
 /* ADMIN */
+
 .admin {
   margin-top: 40px;
   background: #111;
@@ -137,6 +157,7 @@ button:hover { transform: scale(1.03); }
 }
 
 /* FLOATING CART */
+
 .floating-cart {
   position: fixed;
   bottom: 20px;
@@ -158,6 +179,7 @@ footer {
 }
 
 @media (max-width: 600px) {
+
   header h1 {
     font-size: 28px;
     letter-spacing: 2px;
@@ -175,11 +197,10 @@ footer {
     width: 100%;
     margin: 5px 0;
   }
+
 }
 
-
 </style>
-
 </head>
 
 <body>
@@ -205,8 +226,11 @@ footer {
 <div class="products" id="products"></div>
 
 <div class="cart">
+
 <h2>🛒 Cart</h2>
+
 <div id="cart"></div>
+
 <h3 id="total"></h3>
 
 <input id="name" placeholder="Full Name">
@@ -214,13 +238,19 @@ footer {
 <input id="location" placeholder="Delivery Location">
 
 <button onclick="checkout()">Checkout (Mobile Money Simulation)</button>
+
 <button onclick="whatsapp()">Order via WhatsApp</button>
+
 </div>
 
 <div class="admin">
+
 <h2>📦 Admin Orders</h2>
+
 <button onclick="loadOrders()">Refresh Orders</button>
+
 <div id="orders"></div>
+
 </div>
 
 </div>
@@ -229,212 +259,381 @@ footer {
 
 <script>
 
-/* =========================
-   FULL PRODUCT CATALOGUE
-   (ONLY CHANGE MADE)
-========================= */
+/* PRODUCTS */
 
-const perfumes = [
-["Khamrah Qahwah","Lattafa",120000],["Khamrah","Lattafa",110000],
-["Asad Bourbon","Lattafa",100000],["9PM Elixir","Afnan",130000],
-["Stronger With You","Armani",250000],["Oud Mood","Lattafa",90000],
-["Badee Al Oud","Lattafa",115000],["Club De Nuit Intense","Armaf",150000],
-["Eros","Versace",280000],["Sauvage","Dior",320000],
-["Bleu de Chanel","Chanel",350000],["Y Eau de Parfum","YSL",300000],
-["Invictus","Paco Rabanne",270000],["1 Million","Paco Rabanne",260000],
-["Hawas","Rasasi",140000],["Amber Oud Gold","Al Haramain",200000],
-["Oud for Glory","Lattafa",130000],["Velvet Oud","Lattafa",100000],
-["Cool Water","Davidoff",180000],["Versace Dylan Blue","Versace",240000],
-["Black Opium","YSL",310000],["Acqua Di Gio","Armani",290000],
-["Tom Ford Noir","Tom Ford",400000],["Tom Ford Oud Wood","Tom Ford",450000],
-["Bentley Intense","Bentley",160000],["Aventus","Creed",600000],
-["Explorer","Montblanc",180000],["Le Male","Jean Paul Gaultier",220000],
-["Ultra Male","Jean Paul Gaultier",240000],["Dior Homme","Dior",300000]
-];
+let products = [
 
-const lipsticks = [
-["Ruby Woo","MAC",40000],["Velvet Teddy","MAC",42000],
-["Power Bullet","Huda Beauty",45000],["SuperStay Matte","Maybelline",25000],
-["Soft Matte","NYX",30000],["Chili","MAC",40000],
-["Diva","MAC",42000],["Rebel","MAC",45000],
-["Nude Beige","Huda Beauty",43000],["Brown Sugar","Huda Beauty",44000]
-];
+/* PERFUMES */
 
-const lipgloss = [
-["Gloss Bomb","Fenty Beauty",35000],["Lifter Gloss","Maybelline",28000],
-["Butter Gloss","NYX",25000],["Shimmer Gloss","Beauty Line",20000],
-["Clear Shine","Fenty Beauty",36000],["Pink Glow","NYX",27000],
-["Honey Gloss","Maybelline",29000],["Caramel Shine","Beauty Line",24000]
-];
+{
+id:1,
+name:"Khamrah",
+brand:"Lattafa",
+category:"Perfume",
+price:110000,
+image:"images/khamrah.jpg"
+},
 
-const wigs = [
-["Brazilian Wig","Premium Hair",250000],["Peruvian Wig","Premium Hair",260000],
-["Synthetic Wig","Beauty Line",120000],["Straight Lace Wig","Luxury Hair",300000],
-["Body Wave Wig","Premium Hair",280000],["Curly Lace Wig","Luxury Hair",320000],
-["Blonde Highlight Wig","Luxury Hair",350000],["Bob Cut Wig","Beauty Line",150000]
-];
+{
+id:2,
+name:"Sauvage",
+brand:"Dior",
+category:"Perfume",
+price:320000,
+image:"images/sauvage.jpg"
+},
 
-const bags = [
-["Luxury Leather Bag","Gucci Style",150000],["Classic Tote","Zara Style",90000],
-["Mini Handbag","LV Style",120000],["Office Bag","MK Style",140000],
-["Designer Shoulder Bag","Gucci Style",220000],
-["Elegant Handbag","Zara Style",110000],
-["Premium Crossbody","LV Style",180000],
-["Luxury Travel Bag","Gucci Style",300000]
-];
+{
+id:3,
+name:"9PM Elixir",
+brand:"Afnan",
+category:"Perfume",
+price:130000,
+image:"images/9pm-elixir.jpg"
+},
 
-/* =========================
-   SYSTEM (UNCHANGED LOGIC)
-========================= */
+{
+id:4,
+name:"Eros",
+brand:"Versace",
+category:"Perfume",
+price:280000,
+image:"images/eros.jpg"
+},
 
-let products=[];
-let id=0;
+/* LIPSTICKS */
 
-function expand(list, category){
-list.forEach(p=>{
-for(let i=1;i<=6;i++){
-products.push({
-id:id++,
-name:p[0]+" "+i,
-category:category,
-price:p[2]
-});
+{
+id:5,
+name:"Ruby Woo",
+brand:"MAC",
+category:"Lipstick",
+price:40000,
+image:"images/ruby-woo.jpg"
+},
+
+{
+id:6,
+name:"Velvet Teddy",
+brand:"MAC",
+category:"Lipstick",
+price:42000,
+image:"images/velvet-teddy.jpg"
+},
+
+/* LIPGLOSS */
+
+{
+id:7,
+name:"Gloss Bomb",
+brand:"Fenty Beauty",
+category:"Lipgloss",
+price:35000,
+image:"images/gloss-bomb.jpg"
+},
+
+{
+id:8,
+name:"Butter Gloss",
+brand:"NYX",
+category:"Lipgloss",
+price:25000,
+image:"images/butter-gloss.jpg"
+},
+
+/* WIGS */
+
+{
+id:9,
+name:"Brazilian Wig",
+brand:"Premium Hair",
+category:"Wig",
+price:250000,
+image:"images/brazilian-wig.jpg"
+},
+
+{
+id:10,
+name:"Curly Lace Wig",
+brand:"Luxury Hair",
+category:"Wig",
+price:320000,
+image:"images/curly-lace-wig.jpg"
+},
+
+/* BAGS */
+
+{
+id:11,
+name:"Luxury Leather Bag",
+brand:"Gucci Style",
+category:"Bag",
+price:150000,
+image:"images/luxury-leather-bag.jpg"
+},
+
+{
+id:12,
+name:"Mini Handbag",
+brand:"LV Style",
+category:"Bag",
+price:120000,
+image:"images/mini-handbag.jpg"
 }
-});
-}
 
-expand(perfumes,"Perfume");
-expand(lipsticks,"Lipstick");
-expand(lipgloss,"Lipgloss");
-expand(wigs,"Wig");
-expand(bags,"Bag");
+];
 
-let cart=JSON.parse(localStorage.getItem("cart"))||[];
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 function saveCart(){
-localStorage.setItem("cart",JSON.stringify(cart));
+  localStorage.setItem("cart",JSON.stringify(cart));
 }
 
 function show(){
+
 let d=document.getElementById("products");
+
 let f=document.getElementById("filter").value;
+
 let s=document.getElementById("search").value.toLowerCase();
 
 d.innerHTML="";
 
-products.filter(p=>
-(f==="All"||p.category===f)&&p.name.toLowerCase().includes(s)
-).forEach(p=>{
-d.innerHTML+=`
+products
+.filter(p =>
+(f==="All" || p.category===f) &&
+p.name.toLowerCase().includes(s)
+)
+
+.forEach(p=>{
+
+d.innerHTML += `
+
 <div class="card">
+
+<img src="${p.image}" class="product-image">
+
 <h3>${p.name}</h3>
+
+<p>${p.brand}</p>
+
 <p>${p.category}</p>
+
 <p>UGX ${p.price}</p>
-<button onclick="add(${p.id})">Add to Cart</button>
-</div>`;
+
+<button onclick="add(${p.id})">
+Add to Cart
+</button>
+
+</div>
+
+`;
+
 });
+
 }
 
 function add(pid){
+
 let item=products.find(p=>p.id===pid);
+
 let exist=cart.find(x=>x.id===pid);
 
-if(exist){exist.qty++;}else{cart.push({...item,qty:1});}
+if(exist){
+exist.qty++;
+}else{
+cart.push({...item,qty:1});
+}
 
 saveCart();
+
 render();
+
+/* SUCCESS POPUP */
+
+let popup=document.createElement("div");
+
+popup.innerText=`${item.name} added to cart`;
+
+popup.style.position="fixed";
+popup.style.bottom="90px";
+popup.style.right="20px";
+popup.style.background="gold";
+popup.style.color="black";
+popup.style.padding="14px 20px";
+popup.style.borderRadius="12px";
+popup.style.fontWeight="bold";
+popup.style.boxShadow="0 5px 20px rgba(255,215,0,0.5)";
+popup.style.zIndex="9999";
+popup.style.opacity="0";
+popup.style.transform="translateY(20px)";
+popup.style.transition="all 0.4s ease";
+
+document.body.appendChild(popup);
+
+setTimeout(()=>{
+popup.style.opacity="1";
+popup.style.transform="translateY(0)";
+},100);
+
+setTimeout(()=>{
+popup.style.opacity="0";
+popup.style.transform="translateY(20px)";
+},2200);
+
+setTimeout(()=>{
+popup.remove();
+},2700);
+
 }
 
 function render(){
+
 let c=document.getElementById("cart");
+
 let total=0;
+
 c.innerHTML="";
 
 cart.forEach((i,idx)=>{
+
 total+=i.price*i.qty;
 
 c.innerHTML+=`
+
 ${i.name} x${i.qty} = UGX ${i.price*i.qty}
+
 <button onclick="removeItem(${idx})">❌</button><br>
+
 `;
+
 });
 
 document.getElementById("total").innerText="Total UGX "+total;
+
 }
 
 function removeItem(i){
+
 cart.splice(i,1);
+
 saveCart();
+
 render();
+
 }
 
 function checkout(){
-if(cart.length===0)return alert("Cart empty");
+
+if(cart.length===0)
+return alert("Cart empty");
 
 let name=document.getElementById("name").value;
+
 let phone=document.getElementById("phone").value;
+
 let location=document.getElementById("location").value;
 
-if(!name||!phone||!location)return alert("Fill all details");
+if(!name||!phone||!location)
+return alert("Fill all details");
 
-if(!confirm("Proceed with Mobile Money payment?"))return;
+if(!confirm("Proceed with Mobile Money payment?"))
+return;
 
 let order={
-name,phone,location,
+
+name,
+phone,
+location,
+
 items:cart,
+
 total:cart.reduce((t,i)=>t+i.price*i.qty,0),
+
 date:new Date().toLocaleString()
+
 };
 
 let orders=JSON.parse(localStorage.getItem("orders")||"[]");
+
 orders.push(order);
+
 localStorage.setItem("orders",JSON.stringify(orders));
 
 alert("Payment Successful (Simulation)");
 
 cart=[];
+
 saveCart();
+
 render();
+
 }
 
 function whatsapp(){
+
 let msg="Hello, I want to order:%0A";
 
 cart.forEach(i=>{
+
 msg+=`${i.name} x${i.qty}%0A`;
+
 });
 
 msg+=`Total: UGX ${cart.reduce((t,i)=>t+i.price*i.qty,0)}`;
 
 window.open(`https://wa.me/256773325540?text=${msg}`);
+
 }
 
 function loadOrders(){
+
 let orders=JSON.parse(localStorage.getItem("orders")||"[]");
+
 let o=document.getElementById("orders");
+
 o.innerHTML="";
 
 orders.forEach(x=>{
+
 o.innerHTML+=`
+
 <div class="orderBox">
+
 <b>${x.name}</b><br>
+
 ${x.phone}<br>
+
 ${x.location}<br>
+
 ${x.date}<br>
+
 <b>Total: UGX ${x.total}</b>
-</div>`;
+
+</div>
+
+`;
+
 });
+
 }
 
 function scrollToCart(){
-document.getElementById("cart").scrollIntoView({behavior:"smooth"});
+
+document.getElementById("cart").scrollIntoView({
+behavior:"smooth"
+});
+
 }
 
 document.getElementById("search").oninput=show;
+
 document.getElementById("filter").onchange=show;
 
 show();
+
 render();
+
 loadOrders();
 
 </script>
